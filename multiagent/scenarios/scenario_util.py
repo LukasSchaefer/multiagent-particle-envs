@@ -1,6 +1,6 @@
 import numpy as np
 
-VIEW_DISTANCE = 1.5
+VIEW_DISTANCE = 1
 
 def distance(p1, p2):
     vector = p2 - p1
