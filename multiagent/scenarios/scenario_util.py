@@ -2,7 +2,7 @@ import numpy as np
 from multiagent.core import Landmark
 
 # partial observability
-VIEW_DISTANCE = 1.5
+VIEW_DISTANCE = 1.0
 
 def distance(p1, p2):
     vector = p2 - p1
