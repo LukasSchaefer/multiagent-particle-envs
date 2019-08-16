@@ -1,5 +1,3 @@
-**Status:** Archive (code is provided as-is, no updates expected)
-
 # Multi-Agent Particle Environment
 
 A simple multi-agent particle world with a continuous observation and discrete action space, along with some basic simulated physics.
@@ -58,6 +56,44 @@ You can create new scenarios by implementing the first 4 functions above (`make_
 | `simple_tag.py` (Predator-prey) | N | Y | Predator-prey environment. Good agents (green) are faster and want to avoid being hit by adversaries (red). Adversaries are slower and want to hit good agents. Obstacles (large black circles) block the way. |
 | `simple_world_comm.py` | Y | Y | Environment seen in the video accompanying the paper. Same as simple_tag, except (1) there is food (small blue balls) that the good agents are rewarded for being near, (2) we now have ‘forests’ that hide agents inside from being seen from outside; (3) there is a ‘leader adversary” that can see the agents at all times, and can communicate with the other adversaries to help coordinate the chase. |
 
+## Partial Observability
+Additionally, variations using partial oservability are introduced for tasks:
+
+* cooperative communication (`simple_speaker_listener`)
+* cooperative navigation (`simple_spread`)
+* physical deception (`simple_adversary`)
+* predator-prey (`simple_tag`)
+
+This partial-observability is computing the distance of agents to other entities (landmarks and other agents) and obscures their position, velocity etc. in observations if they are outside a pre-defined field of view. Obsured parts of observations are replaced with 0-entries to remain observation dimensionality. The field of view is distance-based and defined as the constant `VIEW_DISTANCE` in `multiagent/scenarios/scenario_util.py`. By default, the viewing distance is set to `0.5`, which corresponds to the visualisations below.
+
+Tasks with partial observability can be found in the scenarios `multiagent/scenarios/simple_speaker_listener_partial_observable.py`, `multiagent/scenarios/simple_spread_partial_observable.py` and so on.
+
+### Visualisations of partial observability for cooperative communication task (`simple_speaker_listener`)
+<img src="assets/mape_simple_speaker_listener.png" width="49%"> <img src="assets/mape_simple_speaker_listener_partialobservable.png" width="49%">
+
+### Visualisations of partial observability for predator-prey task (`simple_tag`)
+<img src="assets/mape_simple_tag.png" width="49%"> <img src="assets/mape_simple_tag_partialobservable.png" width="49%">
+
+## Stochastic Environments
+We also introduce two forms of stochasticity to the tasks
+
+* cooperative communication (`simple_speaker_listener`)
+* cooperative navigation (`simple_spread`)
+* physical deception (`simple_adversary`)
+* predator-prey (`simple_tag`)
+
+in the form of various noise. First, we define observation noise. Such noise is simply concatenated to original observations. Hence, agents have to learn to ignore these random values. Secondly, environmental noise is defined. Such noise adds distortion fields in the environments, which randomise observations of agents inside them. Therefore, agents should learn to circumvent these areas, but can actively choose to step inside them (e.g. prey in the predator-prey task).
+
+### Observation noise
+Observation noise simply adds random values, drawn from a zero-centered Gaussian distribution, to agent observations. Dimensionality and variance of the noise is defined as `OBS_NOISE_DIM` and `OBS_NOISE_VAR` respectively in `multiagent/scenarios/scenario_util.py`. By default noise dimensionality and variance is defined as 5.
+
+Observation noise scenarios can be found in `multiagent/scenarios/simple_speaker_listener_observation_noise.py`, `multiagent/scenarios/simple_spread_observation_noise.py` and so on.
+
+### Environmental noise
+As the name suggests, environmental noise is integrated in the environment. We implement this form of noise using distortion fields. These are landmarks added in the environment of each of the respective tasks. At the beginning, distortion fields are assigned a random location, just as for normal landmarks. They are static and agents can move through them. However, observations of agents inside such a distortion field are heaviy altered by adding random noise. The noise is again drawn from a zero-centered Gaussian with variance `ENV_NOISE_VAR` defined in `multiagent/scenarios/scenario_util.py`. Constant `ENV_NOISE_DISTANCE` defined the size of such a distortion field. By default, variance is set to 5 and the distance is set to 0.5 as for partial observability.
+
+Environmental noise scenarios can be found in `multiagent/scenarios/simple_speaker_listener_env_noise.py`, `multiagent/scenarios/simple_spread_env_noise.py` and so on.
+
 ## Paper citation
 
 If you used this environment for your experiments or found it helpful, consider citing the following papers:
@@ -79,5 +115,15 @@ Original particle world environment:
   author={Mordatch, Igor and Abbeel, Pieter},
   journal={arXiv preprint arXiv:1703.04908},
   year={2017}
+}
+</pre>
+
+Addition of partial observability and stochasticity:
+<pre>
+@MastersThesis{lukas:thesis:2019,
+	title={{{Curiosity in Multi-Agent Reinforcement Learning}}
+    author={Schäfer, Lukas},
+    school={University of Edinburgh},
+    year={2019},
 }
 </pre>
