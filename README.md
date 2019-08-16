@@ -75,6 +75,7 @@ Tasks with partial observability can be found in the scenarios `multiagent/scena
 <img src="assets/mape_simple_tag.png" width="49%"> <img src="assets/mape_simple_tag_partialobservable.png" width="49%">
 
 ## Stochastic Environments
+
 We also introduce two forms of stochasticity to the tasks
 
 * cooperative communication (`simple_speaker_listener`)
@@ -121,7 +122,7 @@ Original particle world environment:
 Addition of partial observability and stochasticity:
 <pre>
 @MastersThesis{lukas:thesis:2019,
-  title={{{Curiosity in Multi-Agent Reinforcement Learning}}
+  title={Curiosity in Multi-Agent Reinforcement Learning}
   author={Schäfer, Lukas},
   school={University of Edinburgh},
   year={2019},
