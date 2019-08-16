@@ -121,9 +121,9 @@ Original particle world environment:
 Addition of partial observability and stochasticity:
 <pre>
 @MastersThesis{lukas:thesis:2019,
-	title={{{Curiosity in Multi-Agent Reinforcement Learning}}
-    author={Schäfer, Lukas},
-    school={University of Edinburgh},
-    year={2019},
+  title={{{Curiosity in Multi-Agent Reinforcement Learning}}
+  author={Schäfer, Lukas},
+  school={University of Edinburgh},
+  year={2019},
 }
 </pre>
