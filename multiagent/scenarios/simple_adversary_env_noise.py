@@ -8,10 +8,13 @@ class ENScenario(BaseScenario):
         world = World()
         # set any world properties first
         world.dim_c = 2
+
         num_agents = 3
         world.num_agents = num_agents
         num_adversaries = 1
-        num_landmarks = num_agents - 1
+        world.num_adversaries = num_adversaries
+        assert(num_adversaries < num_agents)
+        num_landmarks = num_agents - num_adversaries
         # add agents
         world.agents = [Agent() for i in range(num_agents)]
         for i, agent in enumerate(world.agents):
@@ -35,9 +38,10 @@ class ENScenario(BaseScenario):
         return world
 
     def reset_world(self, world):
-        # random properties for agents
-        world.agents[0].color = np.array([0.85, 0.35, 0.35])
-        for i in range(1, world.num_agents):
+        # set agent colors
+        for i in range(world.num_adversaries):
+            world.agents[i].color = np.array([0.85, 0.35, 0.35])
+        for i in range(world.num_adversaries, world.num_agents):
             world.agents[i].color = np.array([0.35, 0.35, 0.85])
         # random properties for landmarks
         for i, landmark in enumerate(world.landmarks[:-1]):
