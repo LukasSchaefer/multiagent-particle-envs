@@ -32,13 +32,13 @@ def obscure_col(agent_pos, entity_pos, entity_color):
 
 # observation noise
 OBS_NOISE_DIM = 5
-OBS_NOISE_VAR = 5
+OBS_NOISE_VAR = 10
 
 def get_noise():
     return [np.random.randn(OBS_NOISE_DIM) * OBS_NOISE_VAR]
 
 # environment noise
-ENV_NOISE_VAR = 5
+ENV_NOISE_VAR = 10
 ENV_NOISE_DISTANCE = 0.5
 
 def create_noise_field(world_dim):
