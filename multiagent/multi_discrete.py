@@ -4,7 +4,7 @@
 import numpy as np
 
 import gym
-from gym.spaces import prng
+# from gym.spaces import prng
 
 class MultiDiscrete(gym.Space):
     """
@@ -30,6 +30,8 @@ class MultiDiscrete(gym.Space):
     def sample(self):
         """ Returns a array with one sample from each discrete action space """
         # For each row: round(random .* (max - min) + min, 0)
+        # get around prng import
+        prng = numpy.random.RandomState().seed(0)
         random_array = prng.np_random.rand(self.num_discrete_space)
         return [int(x) for x in np.floor(np.multiply((self.high - self.low + 1.), random_array) + self.low)]
     def contains(self, x):
